@@ -28,9 +28,3 @@
   service:
     name: ptmd
     state: reloaded
-
-- name: restart kapacitor
-  service:
-    name: kapacitor
-    state: restarted
-    enabled: yes
