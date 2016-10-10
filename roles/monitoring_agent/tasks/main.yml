@@ -1,0 +1,115 @@
+---
+# scripts require these packages.
+- name: Install gcc and python dependency for scripts
+  apt: name={{ item }} update_cache=yes state=present
+  with_items:
+    - gcc
+    - python-dev
+    - python-pip
+
+#psutil is installed for sysenv_data.py
+#pygtail is installed for logs_data.py
+- name: Install python packages via pip
+  pip: name={{ item }}
+  with_items:
+    - psutil
+    - pygtail
+
+- name: Add Telegraf repo key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
+    state: present
+
+- name: Add Telegraf apt repo
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/debian jessie stable"
+    state: present
+
+- name: Install Telegraf
+  apt:
+    name: telegraf
+    update_cache: yes
+    state: present
+
+- name: Configure telegraf service
+  service:
+    name: telegraf
+    state: started
+    enabled: yes
+
+- name: Add telegraph to sudo users for vtysh fping lldpctl cl-netstat smonctl
+  lineinfile:
+    dest: "/etc/sudoers"
+    regexp: '^telegraf'
+    line: 'telegraf ALL=(root) NOPASSWD: /usr/bin/vtysh,/usr/bin/fping,/usr/sbin/lldpctl,/usr/cumulus/bin/cl-netstat,/usr/sbin/smonctl,/var/log/syslog,/usr/local/bin/pygtail'
+    validate: 'visudo -cf %s'
+
+- name: add telegraf to adm group so that it can run lldpctl without errors
+  user:
+    name: telegraf
+    append: yes
+    groups: adm
+
+### Below is my ineloquent way to allow the logs_data.py to properly read syslog
+- name: change permissions on /var/log/syslog
+  file:
+    path: "/var/log/syslog"
+    mode: 0744
+
+- name: change permissions on /var/log/syslog
+  file:
+    path: "/var/log/syslog.offset"
+    state: "touch"
+    mode: 0766
+
+# Note: This will create a memory leak before 3.1.0
+# See CM-11435 for details.
+# Restart quagga to recover memory
+- name: Copy scripts for checks
+  copy: src=telegraf_checks/{{ item.script }} dest=/etc/telegraf/checks/
+  with_items:
+    - { script: "bgp_neighbor_data.py" }
+    - { script: "hwenv_data.py" }
+    - { script: "interface_data.py" }
+    - { script: "lldp_data.py" }
+    - { script: "output_module.py" }
+    - { script: "sysenv_data.py" }
+    - { script: "logs_data.py" }
+
+- name: Install ujson binary
+  copy:
+    src: ujson.so
+    dest: /usr/local/lib/python2.7/dist-packages/
+
+# If copying the files for ujson library doesn't work
+# here's how to build it manually.
+# - name: Install GCC, requirement for ujson
+#   apt:
+#     name: gcc
+#     state: present
+
+# - name: Install python-dev, requirement for ujson
+#   apt:
+#     name: python-dev
+#     state: present
+
+# - name: Install python pip
+#   apt:
+#     name: python-pip
+#     state: present
+
+# - name: Install ujson
+#   pip:
+#     name: ujson
+
+- name: Copy fping script
+  template:
+    src: fping_influxdb.py.j2
+    dest: /usr/local/bin/fping-influxdb.py
+    mode: 0755
+
+- name: Copy telegraf configuration
+  template:
+    src: telegraf.conf.j2
+    dest: /etc/telegraf/telegraf.conf
+  notify: restart telegraf
