@@ -1,0 +1,10 @@
+grafana:
+  # yamllint disable-line
+  api_key: "eyJrIjoiM0RXMWlGR1l4d2lDQUptdW96VGJFeXJpdzhtdUFDQVQiLCJuIjoiYW5zaWJsZV9rZXkiLCJpZCI6MX0="
+
+kapacitor:
+  username: "admin"
+  password: "admin"
+  database: "network"
+  slack_key: "https://hooks.slack.com/services/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"
+  slack_channel: "alerts"

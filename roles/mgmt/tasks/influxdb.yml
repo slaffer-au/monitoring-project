@@ -1,0 +1,24 @@
+---
+- name: Add Influxdb rpm key
+  rpm_key:
+    key: https://repos.influxdata.com/influxdb.key 
+    state: present
+  
+- name: Add repo
+  yum_repository:
+    name: influx
+    description: influx yum repo
+    baseurl: https://repos.influxdata.com/centos/7Server/x86_64/stable/
+
+- name: Install Influxdb
+  yum: name=influxdb state=present
+
+- name: Start influxdb service
+  service:
+    name: influxdb
+    state: started
+    enabled: yes
+
+- name: Create database
+  uri:
+    url: "http://localhost:8086/query?q=CREATE+DATABASE+network"
