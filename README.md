@@ -1,18 +1,4 @@
-# **This directory contains health check plugins and check definitions which are still being developed and are still in the alpha testing stage.**
-
-# Cumulus Health Monitoring Checks
-
-The check plugins defined in this repo are designed to work in Nagios, Sensu,
-Consul and any other Nagios compatible health monitoring system that can run
-on Cumulus Linux
-
-## Directory Structure
-
-* Plugins: List of Health monitoring plugins written mainly in BASH and Python
-* Sensu: Sensu Configuration json file examples using the plugins found in this
-  directory. The list of checks configured are a list suggested by Cumulus
-Networks.
-
+# **This directory contains an Ansible playbook that will deploy a alerting, telemetry and correlation monitoring solution.**
 
 ###CONTRIBUTING
 
@@ -51,7 +37,7 @@ Quickstart: Run the demo
     -
     Specific to Monitoring:
     cd..
-    git clone https://github.com/CumulusNetworks/health-monitoring-checks/
+    git clone https://github.com/CumulusNetworks/monitoring-project/
     cd health-monitoring-checks/
     git checkout influx-grafana
     cd cldemo
@@ -69,11 +55,6 @@ Quickstart: Run the demo
 * Copyright:: 2015 Cumulus Networks Inc.
 
 Licensed under the MIT License.
-
-
-### TODO
-Upstream the new and/or heavily monitoring checks to [Nagios Exchange](https://exchange.nagios.org/)
-
 
 ---
 
