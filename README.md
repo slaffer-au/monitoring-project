@@ -1,6 +1,6 @@
 # **This directory contains an Ansible playbook that will deploy a alerting, telemetry and correlation monitoring solution.**
 
-###CONTRIBUTING
+## CONTRIBUTING
 
 
 1. Fork it.
@@ -10,43 +10,78 @@
 5. Create new Pull Request.
 
 
+Overview
+--------
+
+This demo leverages the Cumulus [reference topology](https://github.com/cumulusnetworks/cldemo-vagrant). In order to use this demo, follow these high level steps:
+1. install Vagrant and Virtualbox/Libvirt on the host
+2. Clone the reference topology
+3. Launch the reference topology using vagrant
+4. SSH into the oob-mgmt-server
+5. Clone the [monitoring-project repo](https://github.com/CumulusNetworks/monitoring-project)
+6. Run the demo using run-demo.yml
+
+This demo requires the network to be provisioned. Without the networking being provisioned, it will not provide reliable output.
+
+## Tools and Terminology
+------------------------
+Telegraf - An agent that runs on the switches that exports data to InfluxDB
+InfluxDB - A timeseries database that stores the data using tags and values. Uses a flexible schema and SQL-like query language.
+Grafana - A Graphical dashboard that integrates with multiple databases. A live demo can be seen here http://play.grafana.org/ Also a great way to figure out queries.
+
 Quickstart: Run the demo
 ------------------------
-(This assumes you are running Ansible 1.9.4 and Vagrant 1.8.4 on your host.)
+(This works best with Ansible 2.1.0.0 and Vagrant 1.8.4 on your host.)
 
-    Create the virtual network:
+# Create the virtual network:
     git clone https://github.com/cumulusnetworks/cldemo-vagrant
     cd cldemo-vagrant
     vagrant up oob-mgmt-server oob-mgmt-switch leaf01 leaf02 leaf03 leaf04 spine01 spine02 server01 server02 server03 server04
     vagrant ssh oob-mgmt-server
     sudo su - cumulus
-    sudo apt-get install software-properties-common -y
-    sudo apt-add-repository ppa:ansible/ansible -y
-    sudo apt-get update
-    sudo apt-get install ansible -qy
-    -
-    Setting up the base network:
-    git clone https://github.com/cumulusnetworks/cldemo-automation-ansible
+### (OPTIONAL) Setting up the base network. This monitoring demo requires the network to be provisioned to pass traffic. The following repo will provision the network to pass traffic:
+    git clone https://github.com/CumulusNetworks/cldemo-automation-ansible.git
     cd cldemo-automation-ansible
-    git checkout full-reference-topology
     ansible-playbook run-demo.yml
-    ssh server01
-    wget 172.16.2.101
-    cat index.html
-    exit to oob-mgmt-server
-    -
-    Specific to Monitoring:
-    cd..
-    git clone https://github.com/CumulusNetworks/monitoring-project/
-    cd health-monitoring-checks/
-    git checkout influx-grafana
-    cd cldemo
-    ansible-playbook main.yml
-    -
-    Getting to the Dashboard:
+# Provision the network with the monitoring solution
+    git clone https://github.com/cumulusnetworks/monitoring-project
+    cd monitoring-project
+    ansible-playbook run-demo.yml
+### (OPTIONAL)
+# Getting to the Dashboard:
     With VirtualBox or Vagrant, forward port 3000 on the NAT enabled NIC for the Grafana dashboard. Also port forward 8083 for the influxDB dashboard and 8086 for the influxDB API if you plan on accessing influxDB with the browser.
     Open a web browser on your local machine, navigate to http://localhost:3000 . Once logged in, click on the grafana logo in the top right of the browser. Navigate the drop down menu to dashboards, then import. 
-    Import the json file from /health-monitoring-checks/cldemo/roles/mgmt/files/dashboards . 
+
+## Detailed Steps to Install
+Clone the cldemo-vagrant repo and launch a reference topology simulation.
+
+The cldemo-vagrant demo will require Vagrant, Virtualbox and Ansible.
+
+Set up the network to pass traffic. This can be done easily by cloning the cldemo-automation-ansible repo, changing to the full-reference-topology branch and running the playbook to provision BGP unnumbered throughout the network.
+
+Clone the health-monitoring-checks repo and change to the influx-grafana branch. Run the playbook in the cldemo directory to provision the following things:
+1 Installs InfluxDB on the oob-mgmt-server
+2 Creates new database on InfluxDB
+3 Installs Grafana on the oob-mgmt-server
+4 Creates an API key for Grafana to leverage HTTP API
+5 Adds InfluxDB as a datasource
+6 Uploads dashboard to Grafana
+7 Installs Telegraf and all leafs and spines and copies over all the checks.
+8 Configures Telegraf to run all the scripts and upload data to InfluxDB
+To access the Grafana GUI, set up port forwarding on VirtualBox so that port 3000 is accessible.
+
+Vagrantfile edit alternative to changing port forwarding in VirtualBox. This edit takes place under the oob-mgmt-server settings:
+# link for eth1 --> oob-mgmt-switch:swp1
+device.vm.network "private_network", virtualbox__intnet: "#{wbid}_net54", auto_config: false , :mac => "44383900005f"
+device.vm.network "forwarded_port", guest: 3000, host:3000
+device.vm.network "forwarded_port", guest: 8083, host:8083
+device.vm.network "forwarded_port", guest: 8086, host:8086
+ 
+
+Uploading Custom Dashboard
+Any dashboards can be manually imported after Grafana and Influxdb are installed. This is useful to exporting and importing dashboards from other sources. Be aware to properly populate the "datasource" field in the dashboard.json file being imported.
+
+
 
 ## License and Authors
 
