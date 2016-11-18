@@ -50,7 +50,7 @@ Quickstart: Run the demo
 ### (OPTIONAL)
 # Getting to the Dashboard:
     With VirtualBox or Vagrant, forward port 3000 on the NAT enabled NIC for the Grafana dashboard. Also port forward 8083 for the influxDB dashboard and 8086 for the influxDB API if you plan on accessing influxDB with the browser.
-    Open a web browser on your local machine, navigate to http://localhost:3000 . Once logged in, click on the grafana logo in the top right of the browser. Navigate the drop down menu to dashboards, then import. 
+    Open a web browser on your local machine, navigate to http://localhost:3000 . Once logged in, click on the grafana logo in the top right of the browser. Navigate the drop down menu to dashboards, then import.
 
 ## Detailed Steps to Install
 Clone the cldemo-vagrant repo and launch a reference topology simulation.
@@ -61,26 +61,40 @@ Set up the network to pass traffic. This can be done easily by cloning the cldem
 
 Clone the health-monitoring-checks repo and change to the influx-grafana branch. Run the playbook in the cldemo directory to provision the following things:
 1 Installs InfluxDB on the oob-mgmt-server
-2 Creates new database on InfluxDB
-3 Installs Grafana on the oob-mgmt-server
-4 Creates an API key for Grafana to leverage HTTP API
-5 Adds InfluxDB as a datasource
-6 Uploads dashboard to Grafana
-7 Installs Telegraf and all leafs and spines and copies over all the checks.
-8 Configures Telegraf to run all the scripts and upload data to InfluxDB
+1a Creates new database on InfluxDB
+2 Installs Grafana on the oob-mgmt-server
+2a Creates an API key for Grafana to leverage HTTP API
+2b Adds InfluxDB as a datasource
+2c Uploads dashboard to Grafana
+3 Installs Telegraf and all leafs and spines and copies over all the checks.
+3a Configures Telegraf to run all the scripts and upload data to InfluxDB
 To access the Grafana GUI, set up port forwarding on VirtualBox so that port 3000 is accessible.
+![Vagrant](Vagrant.png)
 
-Vagrantfile edit alternative to changing port forwarding in VirtualBox. This edit takes place under the oob-mgmt-server settings:
+The Vagrantfile can be edit as an alternative to changing port forwarding in VirtualBox via teh GUI. This edit takes place under the oob-mgmt-server settings:
 # link for eth1 --> oob-mgmt-switch:swp1
 device.vm.network "private_network", virtualbox__intnet: "#{wbid}_net54", auto_config: false , :mac => "44383900005f"
 device.vm.network "forwarded_port", guest: 3000, host:3000
 device.vm.network "forwarded_port", guest: 8083, host:8083
 device.vm.network "forwarded_port", guest: 8086, host:8086
- 
+
+
+Once the playbook has run, access the Grafana homepage on http://localhost:3000
+This should return the following page:
+![GrafanaLogin](GrafanaLogin.png)
+
+
+The username and password are admin/admin
 
 Uploading Custom Dashboard
+--------------------------
 Any dashboards can be manually imported after Grafana and Influxdb are installed. This is useful to exporting and importing dashboards from other sources. Be aware to properly populate the "datasource" field in the dashboard.json file being imported.
 
+
+To import another custom dashboard, use the following steps:
+![GrafanaDashboard](GrafanaDashboard.png)
+
+![GrafanaImport](GrafanaImport.png)
 
 
 ## License and Authors
