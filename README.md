@@ -72,11 +72,11 @@ To access the Grafana GUI, set up port forwarding on VirtualBox so that port 300
 ![Vagrant](Vagrant.png)
 
 The Vagrantfile can be edit as an alternative to changing port forwarding in VirtualBox via teh GUI. This edit takes place under the oob-mgmt-server settings:
-# link for eth1 --> oob-mgmt-switch:swp1
-device.vm.network "private_network", virtualbox__intnet: "#{wbid}_net54", auto_config: false , :mac => "44383900005f"
-device.vm.network "forwarded_port", guest: 3000, host:3000
-device.vm.network "forwarded_port", guest: 8083, host:8083
-device.vm.network "forwarded_port", guest: 8086, host:8086
+    # link for eth1 --> oob-mgmt-switch:swp1
+    device.vm.network "private_network", virtualbox__intnet: "#{wbid}_net54", auto_config: false , :mac => "44383900005f"
+    device.vm.network "forwarded_port", guest: 3000, host:3000
+    device.vm.network "forwarded_port", guest: 8083, host:8083
+    device.vm.network "forwarded_port", guest: 8086, host:8086
 
 
 Once the playbook has run, access the Grafana homepage on http://localhost:3000
