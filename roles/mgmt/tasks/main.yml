@@ -1,6 +1,4 @@
 ---
-- include: firewall.yml
-- include: repo.yml
 - include: influxdb.yml
 - include: grafana.yml
 - include: kapacitor.yml

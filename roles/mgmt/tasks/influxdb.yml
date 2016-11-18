@@ -1,17 +1,19 @@
 ---
-- name: Add Influxdb rpm key
-  rpm_key:
-    key: https://repos.influxdata.com/influxdb.key 
+- name: Add Influxdb apt key
+  apt_key:
+    url: https://repos.influxdata.com/influxdb.key
     state: present
-  
-- name: Add repo
-  yum_repository:
-    name: influx
-    description: influx yum repo
-    baseurl: https://repos.influxdata.com/centos/7Server/x86_64/stable/
+
+- name: Add Influxdb apt repo
+  apt_repository:
+    repo: "deb https://repos.influxdata.com/debian jessie stable"
+    state: present
 
 - name: Install Influxdb
-  yum: name=influxdb state=present
+  apt:
+    name: influxdb
+    update_cache: yes
+    state: present
 
 - name: Start influxdb service
   service:
