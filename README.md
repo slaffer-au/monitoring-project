@@ -72,7 +72,7 @@ Clone the health-monitoring-checks repo and change to the influx-grafana branch.
 
 ![Vagrant](Vagrant.png)
 
-The Vagrantfile can be edit as an alternative to changing port forwarding in VirtualBox via teh GUI. This edit takes place under the oob-mgmt-server settings:
+The Vagrantfile can be edit as an alternative to changing port forwarding in VirtualBox via the GUI. This edit takes place under the oob-mgmt-server settings:
 
     # link for eth1 --> oob-mgmt-switch:swp1
     device.vm.network "private_network", virtualbox__intnet: "#{wbid}_net54", auto_config: false , :mac => "44383900005f"
