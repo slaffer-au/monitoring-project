@@ -14,6 +14,7 @@ Overview
 --------
 
 This demo leverages the Cumulus [reference topology](https://github.com/cumulusnetworks/cldemo-vagrant). In order to use this demo, follow these high level steps:
+
 1. install Vagrant and Virtualbox/Libvirt on the host
 2. Clone the reference topology
 3. Launch the reference topology using vagrant
@@ -46,7 +47,7 @@ Quickstart: Run the demo
 # Provision the network with the monitoring solution
     git clone https://github.com/cumulusnetworks/monitoring-project
     cd monitoring-project
-    ansible-playbook run-demo.yml
+    ansible-playbook main.yml
 ## (OPTIONAL) Getting to the Dashboard:
     With VirtualBox or Vagrant, forward port 3000 on the NAT enabled NIC for the Grafana dashboard. Also port forward 8083 for the influxDB dashboard and 8086 for the influxDB API if you plan on accessing influxDB with the browser.
     Open a web browser on your local machine, navigate to http://localhost:3000 . Once logged in, click on the grafana logo in the top right of the browser. Navigate the drop down menu to dashboards, then import.
