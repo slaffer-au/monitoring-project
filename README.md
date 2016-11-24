@@ -19,7 +19,7 @@ This demo leverages the Cumulus [reference topology](https://github.com/cumulusn
 3. Launch the reference topology using vagrant
 4. SSH into the oob-mgmt-server
 5. Clone the [monitoring-project repo](https://github.com/CumulusNetworks/monitoring-project)
-6. Run the demo using run-demo.yml
+6. Run the demo using main.yml
 
 This demo requires the network to be provisioned. Without the networking being provisioned, it will not provide reliable output.
 
