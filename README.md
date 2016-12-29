@@ -43,6 +43,7 @@ Quickstart: Run the demo
 ## (OPTIONAL) Setting up the base network. This monitoring demo requires the network to be provisioned to pass traffic. The following repo will provision the network to pass traffic:
     git clone https://github.com/CumulusNetworks/cldemo-automation-ansible.git
     cd cldemo-automation-ansible
+    git checkout full-reference-topology 
     ansible-playbook run-demo.yml
 # Provision the network with the monitoring solution
     git clone https://github.com/cumulusnetworks/monitoring-project
