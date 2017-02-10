@@ -1,4 +1,4 @@
-mport redis
+import redis
 import subprocess
 import json
 import time
@@ -30,8 +30,8 @@ for command in commands:
 print len(failed_nodes)
 print len(parsed_json[0])
 
-output = '{"target":"failed_peers", "datapoints": [[%d,%d]]}' % (len(failed_nodes), time.time())
-output = '{"target":"total_peers", "datapoints": [[%d,%d]]}' % (len(parsed_json[0]), time.time())
+failed_output = '{"target":"failed_peers", "datapoints": [[%d,%d]]}' % (len(failed_nodes), time.time())
+total_output = '{"target":"total_peers", "datapoints": [[%d,%d]]}' % (len(parsed_json[0]), time.time())
 # print output
 
 target = open("series.json",'w')
@@ -39,6 +39,7 @@ target = open("series.json",'w')
 target.truncate()
 
 target.write("[\n")
-target.write("\t"+output)
+target.write("\t"+total_output+",\n")
+target.write("\t"+failed_output)
 target.write("\n]")
 target.close()
