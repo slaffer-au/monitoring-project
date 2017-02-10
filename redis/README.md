@@ -6,9 +6,10 @@ This is an add on that uses the simple-json-datasource from Grafana to create a 
 
 # Launch simple-json-datasource on OOB server
 
-Install dependencies
-cumulus@oob-mgmt-server:~/monitoring-project/redis$ sudo apt-get install npm
-cumulus@oob-mgmt-server:~/monitoring-project/redis$ sudo apt-get install nodejs-legacy
+Install dependencies:
+
+    cumulus@oob-mgmt-server:~/monitoring-project/redis$ sudo apt-get install npm
+    cumulus@oob-mgmt-server:~/monitoring-project/redis$ sudo apt-get install nodejs-legacy
 
 # Install Fake-Simple-Jason-Datasource
 
@@ -71,7 +72,7 @@ https://github.com/bergquist/fake-simple-json-datasource
     | `-- vary@1.1.0
     `-- lodash@4.17.4
     npm WARN fake-simple-json-datasource@1.0.0 No repository field.
-
+-
     cumulus@oob-mgmt-server:~/monitoring-project/redis$ sudo node index.js &
     Server is listening to port 3333
     cumulus@oob-mgmt-server:~/monitoring-project/redis$ ps -aux | grep index
@@ -91,7 +92,7 @@ The Simple JSON Datasource looks at a flat file that has json data encoding. In 
     into: /var/lib/grafana/plugins
     ✔ Installed grafana-simple-json-datasource successfully
     Restart grafana after installing plugins . <service grafana-server restart>
-
+-
     cumulus@oob-mgmt-server:~/monitoring-project$ sudo systemctl restart grafana-server.service
 
 Grafana cli isn't part of the path, so it needs the full path to run:
@@ -105,8 +106,10 @@ Grafana cli isn't part of the path, so it needs the full path to run:
 
 # Add simple-json-datasource as Datasource
 
+![SimpleJsonSource](DataSource.png)
 
 # Create Panels that Graph the Data
 
-
-
+![Panel](Panel.png)
+![PanelMetrics](PanelMetrics.png)
+![PanelOptions](PanelOptions.png)
