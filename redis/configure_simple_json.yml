@@ -1,0 +1,19 @@
+---
+- hosts: mgmt
+  become: yes
+  # roles:
+  #   - mgmt
+  # handlers:
+  #   - include: handlers/main.yml
+  #     static: yes
+  tasks:
+  - name: Install necessary apt-packages
+    apt: name={{ item }} state=installed update_cache=yes
+    with_items:
+      - npm
+      - nodejs-legacy
+
+  - name: Install python packages via pip
+    pip: name={{ item }}
+    with_items:
+      - redis
