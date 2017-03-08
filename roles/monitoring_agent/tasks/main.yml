@@ -71,13 +71,7 @@
     src: ujson.so
     dest: /usr/local/lib/python2.7/dist-packages/
 
-# If copying the files for ujson library doesn't work
-# here's how to build it manually.
-# - name: Install GCC, requirement for ujson
-#   apt:
-#     name: gcc
-#     state: present
-
+# check with rama to see if we can just do this instead of pushing ujson.so
 # - name: Install ujson
 #   pip:
 #     name: ujson
