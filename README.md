@@ -72,7 +72,7 @@ Clone the health-monitoring-checks repo and change to the influx-grafana branch.
     To access the Grafana GUI, set up port forwarding on VirtualBox so that port 3000 is accessible.
 
 
-![Vagrant](Vagrant.png)
+![Vagrant](docs/Vagrant.png)
 
 The Vagrantfile can be edit as an alternative to changing port forwarding in VirtualBox via the GUI. This edit takes place under the oob-mgmt-server settings:
 
@@ -84,7 +84,7 @@ The Vagrantfile can be edit as an alternative to changing port forwarding in Vir
 
 Once the playbook has run, access the Grafana homepage on http://localhost:3000
 This should return the following page:
-![GrafanaLogin](GrafanaLogin.png)
+![GrafanaLogin](docs/GrafanaLogin.png)
 
 
 The username and password are admin/admin
@@ -95,9 +95,9 @@ Any dashboards can be manually imported after Grafana and Influxdb are installed
 
 
 To import another custom dashboard, use the following steps:
-![GrafanaDashboard](GrafanaDashboard.png)
+![GrafanaDashboard](dcos/GrafanaDashboard.png)
 
-![GrafanaImport](GrafanaImport.png)
+![GrafanaImport](docs/GrafanaImport.png)
 
 # Using the Demo
 Bring down swp4 on spine02:
@@ -154,7 +154,7 @@ Grafana is deployed on the same server as InfluxDB. It uses a local HTTP connect
 
 Kapacitor is installed on the same server as InfluxDB. It uses a local HTTP connection to stream data from InfluxDB and send alerts when certain thresholds are crossed. Kapacitor connects to InfluxDB over TCP 8086, but it uses port 9092 for programming itself.
 
-![GrafanaGraphs](GrafanaGraphs.png)
+![GrafanaGraphs](docs/GrafanaGraphs.png)
 
 This will cause the BGP neighbor relationship between leaf04 and spine02 to go down. Wait 15 seconds and you'll see an alert on the Grafana dashboard showing a correlation between the drop in traffic and the reason for the BGP down.
 
