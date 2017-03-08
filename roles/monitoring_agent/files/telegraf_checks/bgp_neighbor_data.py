@@ -74,18 +74,12 @@ def bgp_neighbor_information():
             print("Provided peer " + peer + " not found.")
             exit(3)
         for stat, value in peer_output_json[peer]["messageStats"].items():
-            # bgpstat,host=leaf1,peer=swp2 totalSent=6520
-            # print("bgpstat,host=" + socket.gethostname() + ",peer=" + peer + " " + stat.encode('ascii') + "=" + str(value))
             data.add_row({"peer":peer},{stat:str(value)})
-    # data.add_row({},{"num_peers":len(json_neighbor_sum["peers"])})
     data.add_row({},{"num_peers":num_peers, "failed_peers":failed_peers})
 
     #data.show_data()
     data.send_data("cli")
 
 if __name__ == "__main__":
-
     bgp_neighbor_information()
-
     exit(0)
-
