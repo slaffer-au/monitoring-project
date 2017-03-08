@@ -62,7 +62,6 @@
     - { script: "bgp_data.py" }
     - { script: "check_link_state.py" }
     - { script: "interface_data.py" }
-    - { script: "sysenv_data.py" }
     - { script: "logs_data.py" }
 
 

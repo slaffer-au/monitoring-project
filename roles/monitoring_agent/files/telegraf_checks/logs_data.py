@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 from pygtail import Pygtail
 import sys
 from output_module import ExportData

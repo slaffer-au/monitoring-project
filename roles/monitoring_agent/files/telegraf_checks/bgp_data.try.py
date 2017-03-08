@@ -7,9 +7,7 @@ import json
 import subprocess
 from output_module import ExportData
 
-sudo = "/usr/bin/sudo"
-vtysh = "/usr/bin/vtysh"
-
+#-------------------------------------------------------------------------------
 
 def run_json_command(command):
     """
@@ -25,33 +23,31 @@ def run_json_command(command):
 
     return json_str
 
+#-------------------------------------------------------------------------------
 
 def bgp_neighbor_information():
 
-    # Due to CM-12223, we have to pull neighbor data one at a time.
-    # TODO: When this is fixed we can replace the show ip bgp sum
-    # command with just "show ip bgp neighbor json" and iterate
+    data = ExportData("bgpstat")
 
+    # get number of good and failed neighbors
+    #
     neighbor_sum_output = run_json_command(
-        [sudo, vtysh, "-c", 'show ip bgp sum json'])
+        ['net', 'show', 'bgp', 'ipv4', 'unicast', 'summary', 'json'])
 
     # if bgp is not configured no output is returned
     if len(neighbor_sum_output) == 0:
         print("No neighbor output. Is BGP configured?")
         exit(3)
 
+# this line causes problems with telegraf
     json_neighbor_sum = json.loads(neighbor_sum_output.decode('utf-8'))
 
     if len(json_neighbor_sum["peers"]) == 0:
         print("No BGP peers found. Are any BGP peers configured?")
         exit(3)
 
-    # BGP is configured and peers exist.
-
-    data = ExportData("bgpstat")
     num_peers=0
     failed_peers=0
-
     for peer in json_neighbor_sum["peers"].keys():
 
         #Check if the current state of the peer is establishes to count number of up peers
@@ -59,33 +55,35 @@ def bgp_neighbor_information():
             num_peers += 1
         else:
             failed_peers += 1
-
-
-        peer_output = run_json_command(
-            [sudo, vtysh, "-c", 'show ip bgp neighbor ' + peer + ' json'])
-
-        if len(peer_output) == 0:
-            print("No neighbor output for peer" + peer + ".")
-            exit(3)
-
-        peer_output_json = json.loads(peer_output.decode('utf-8'))
-
-        if peer not in peer_output_json:
-            print("Provided peer " + peer + " not found.")
-            exit(3)
-        for stat, value in peer_output_json[peer]["messageStats"].items():
-            # bgpstat,host=leaf1,peer=swp2 totalSent=6520
-            # print("bgpstat,host=" + socket.gethostname() + ",peer=" + peer + " " + stat.encode('ascii') + "=" + str(value))
-            data.add_row({"peer":peer},{stat:str(value)})
-    # data.add_row({},{"num_peers":len(json_neighbor_sum["peers"])})
     data.add_row({},{"num_peers":num_peers, "failed_peers":failed_peers})
 
-    #data.show_data()
+    # get number of external BGP routes
+    #
+    route_output = run_json_command(
+        ['net', 'show', 'bgp', 'ipv4', 'unicast', 'json'])
+
+    if len(route_output) == 0:
+        print("No route output. Is BGP configured?")
+        exit(3)
+
+# this line causes problems with telegraf
+    json_route_output = json.loads(route_output.decode('utf-8'))
+
+    internal = 0
+    external = 0
+    for (route, info) in json_route_output['routes'].iteritems():
+        if info[0]['pathFrom'] == "external":
+            external += 1
+        if info[0]['pathFrom'] == "internal":
+            internal += 1
+    data.add_row({},{"num_external":external, "num_internal":internal})
+
+    # data.show_data()
     data.send_data("cli")
 
+#-------------------------------------------------------------------------------
+
 if __name__ == "__main__":
-
     bgp_neighbor_information()
-
     exit(0)
 

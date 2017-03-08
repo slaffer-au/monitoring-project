@@ -38,20 +38,22 @@ def check_link_state():
     # compare the two sets and log the differences (this is ugly, but it's late)
     #
     if LAST != None:
-        data = ExportData("logs")
         changed = list()
         for I in UP:
             if I not in LAST:
                 changed.append(I)
         if changed:
+            data = ExportData("logs")
             data.add_row({"msg":"link"},{"reason":'"'+",".join(changed)+" up"+'"',"peer":'""'})
+            data.send_data("cli")
         changed = list()
         for I in LAST:
             if I not in UP:
                 changed.append(I)
         if changed:
+            data = ExportData("logs")
             data.add_row({"msg":"link"},{"reason":'"'+",".join(changed)+" down"+'"',"peer":'""'})
-    data.send_data("cli")
+            data.send_data("cli")
 
     # track the number of front panel interfaces
     #
