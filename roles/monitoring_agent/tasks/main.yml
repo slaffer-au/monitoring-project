@@ -58,13 +58,13 @@
 - name: Copy scripts for checks
   copy: src=telegraf_checks/{{ item.script }} dest=/etc/telegraf/checks/
   with_items:
-    - { script: "bgp_neighbor_data.py" }
-    - { script: "hwenv_data.py" }
-    - { script: "interface_data.py" }
-    - { script: "lldp_data.py" }
     - { script: "output_module.py" }
+    - { script: "bgp_data.py" }
+    - { script: "check_link_state.py" }
+    - { script: "interface_data.py" }
     - { script: "sysenv_data.py" }
     - { script: "logs_data.py" }
+
 
 - name: Install ujson binary
   copy:
