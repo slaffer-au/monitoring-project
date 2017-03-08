@@ -14,40 +14,34 @@
     - psutil
     - pygtail
 
-- name: Add Telegraf repo key
+- name: Install telegraph
   apt_key:
     url: https://repos.influxdata.com/influxdb.key
     state: present
-
-- name: Add Telegraf apt repo
-  apt_repository:
+- apt_repository:
     repo: "deb https://repos.influxdata.com/debian jessie stable"
     state: present
-
-- name: Install Telegraf
-  apt:
+- apt:
     name: telegraf
     update_cache: yes
     state: present
 
-- name: Configure telegraf service
-  service:
-    name: telegraf
-    state: started
-    enabled: yes
-
-- name: Add telegraph to sudo users for vtysh lldpctl cl-netstat smonctl
+- name: Configure the system for telegraf to run correctly
   lineinfile:
     dest: "/etc/sudoers"
     regexp: '^telegraf'
     line: 'telegraf ALL=(root) NOPASSWD: /usr/bin/vtysh,/usr/sbin/lldpctl,/usr/cumulus/bin/cl-netstat,/usr/sbin/smonctl,/var/log/syslog,/usr/local/bin/pygtail'
     validate: 'visudo -cf %s'
-
-- name: add telegraf to adm group so that it can run lldpctl without errors
-  user:
+# add telegraf to adm group so that it can run lldpctl without errors
+- user:
     name: telegraf
     append: yes
     groups: adm
+# seems like the installation would do this... need to check at some point
+- service:
+    name: telegraf
+    state: started
+    enabled: yes
 
 ### Below is my ineloquent way to allow the logs_data.py to properly read syslog
 - name: change permissions on /var/log/syslog
@@ -55,7 +49,7 @@
     path: "/var/log/syslog"
     mode: 0744
 
-- name: change permissions on /var/log/syslog
+- name: create /var/log/syslog.offset for pygtail to track state
   file:
     path: "/var/log/syslog.offset"
     state: "touch"
