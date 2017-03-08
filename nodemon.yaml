@@ -1,0 +1,16 @@
+---
+- hosts: spines
+  become: yes
+  roles:
+    - monitoring_agent
+  handlers:
+    - include: handlers/main.yml
+      static: yes
+
+- hosts: leafs
+  become: yes
+  roles:
+    - monitoring_agent
+  handlers:
+    - include: handlers/main.yml
+      static: yes

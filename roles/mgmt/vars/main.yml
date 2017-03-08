@@ -1,6 +1,6 @@
 grafana:
   # yamllint disable-line
-  api_key:
+  api_key: "eyJrIjoiNUQ1cDVoOGxWSlczM0J0dExkNHJyNURSekVqdWpDQ1UiLCJuIjoiYW5zaWJsZV9rZXkiLCJpZCI6MX0="
 
 kapacitor:
   username: "admin"

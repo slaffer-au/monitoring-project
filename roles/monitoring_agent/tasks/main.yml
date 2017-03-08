@@ -1,9 +1,8 @@
 ---
 # scripts require these packages.
-- name: Install gcc and python dependency for scripts
+- name: Install python dependency for scripts
   apt: name={{ item }} update_cache=yes state=present
   with_items:
-    - gcc
     - python-dev
     - python-pip
 
@@ -37,11 +36,11 @@
     state: started
     enabled: yes
 
-- name: Add telegraph to sudo users for vtysh fping lldpctl cl-netstat smonctl
+- name: Add telegraph to sudo users for vtysh lldpctl cl-netstat smonctl
   lineinfile:
     dest: "/etc/sudoers"
     regexp: '^telegraf'
-    line: 'telegraf ALL=(root) NOPASSWD: /usr/bin/vtysh,/usr/bin/fping,/usr/sbin/lldpctl,/usr/cumulus/bin/cl-netstat,/usr/sbin/smonctl,/var/log/syslog,/usr/local/bin/pygtail'
+    line: 'telegraf ALL=(root) NOPASSWD: /usr/bin/vtysh,/usr/sbin/lldpctl,/usr/cumulus/bin/cl-netstat,/usr/sbin/smonctl,/var/log/syslog,/usr/local/bin/pygtail'
     validate: 'visudo -cf %s'
 
 - name: add telegraf to adm group so that it can run lldpctl without errors
@@ -62,9 +61,6 @@
     state: "touch"
     mode: 0766
 
-# Note: This will create a memory leak before 3.1.0
-# See CM-11435 for details.
-# Restart quagga to recover memory
 - name: Copy scripts for checks
   copy: src=telegraf_checks/{{ item.script }} dest=/etc/telegraf/checks/
   with_items:
@@ -88,25 +84,9 @@
 #     name: gcc
 #     state: present
 
-# - name: Install python-dev, requirement for ujson
-#   apt:
-#     name: python-dev
-#     state: present
-
-# - name: Install python pip
-#   apt:
-#     name: python-pip
-#     state: present
-
 # - name: Install ujson
 #   pip:
 #     name: ujson
-
-- name: Copy fping script
-  template:
-    src: fping_influxdb.py.j2
-    dest: /usr/local/bin/fping-influxdb.py
-    mode: 0755
 
 - name: Copy telegraf configuration
   template:
