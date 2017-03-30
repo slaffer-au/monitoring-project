@@ -40,10 +40,11 @@
     enabled: yes
 
 - name: Correct influxdb permissions
-  path: /var/lib/influxdb
-  owner: influxdb
-  group: influxdb
-  recurse: yes
+  file:
+    path: /var/lib/influxdb
+    owner: influxdb
+    group: influxdb
+    recurse: yes
 
 # - name: Create database
 #   uri:
