@@ -88,7 +88,7 @@
 
 
 # If the dashboard loads, but the data source can not be found
-# edit the json file, looking for "influx" and replace it
+# edit the json file, looking for "${DS_INFLUX}" and replace it
 # with "influx". Grafana's added this in 3.1 and it doesn't
 # seem to work properly.
 #
@@ -107,4 +107,16 @@
     HEADER_Authorization: "Bearer {{ grafana.api_key }}"
     HEADER_Content-Type: "application/json"
     body: "{{ lookup('file', 'dashboards/datacenter_fabric.json') }}"
+  ignore_errors: yes
+
+- name: Add main dashboard
+  uri:
+    url: "http://localhost:3000/api/dashboards/db"
+    method: POST
+    # For dashboards build before Grafana 3.1, change this to
+    # body_format: raw
+    body_format: json
+    HEADER_Authorization: "Bearer {{ grafana.api_key }}"
+    HEADER_Content-Type: "application/json"
+    body: "{{ lookup('file', 'dashboards/buffer_monitoring.json') }}"
   ignore_errors: yes
