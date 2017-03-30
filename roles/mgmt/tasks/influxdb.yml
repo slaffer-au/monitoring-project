@@ -46,6 +46,3 @@
     group: influxdb
     recurse: yes
 
-# - name: Create database
-#   uri:
-#     url: "http://localhost:8086/query?q=CREATE+DATABASE+network"
