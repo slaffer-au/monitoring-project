@@ -109,14 +109,14 @@
 #     body: "{{ lookup('file', 'dashboards/datacenter_fabric.json') }}"
 #   ignore_errors: yes
 
-- name: Add buffer monitoring dashboard
-  uri:
-    url: "http://localhost:3000/api/dashboards/db"
-    method: POST
-    # For dashboards build before Grafana 3.1, change this to
-    # body_format: raw
-    body_format: json
-    HEADER_Authorization: "Bearer {{ grafana.api_key }}"
-    HEADER_Content-Type: "application/json"
-    body: "{{ lookup('file', 'dashboards/buffer_monitoring.json') }}"
-  ignore_errors: yes
+# - name: Add buffer monitoring dashboard
+#   uri:
+#     url: "http://localhost:3000/api/dashboards/db"
+#     method: POST
+#     # For dashboards build before Grafana 3.1, change this to
+#     # body_format: raw
+#     body_format: json
+#     HEADER_Authorization: "Bearer {{ grafana.api_key }}"
+#     HEADER_Content-Type: "application/json"
+#     body: "{{ lookup('file', 'dashboards/buffer_monitoring.json') }}"
+#   ignore_errors: yes
