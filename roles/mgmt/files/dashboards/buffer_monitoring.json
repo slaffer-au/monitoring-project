@@ -50,7 +50,229 @@
   "rows": [
     {
       "collapse": false,
-      "height": 288,
+      "height": 250,
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "datasource": "influx",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 18,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT derivative(\"mc_total_egress\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "<1",
+          "title": "Multicast Packets Transmitted",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": true,
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "datasource": "influx",
+          "format": "none",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "id": 19,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "span": 6,
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "policy": "default",
+              "query": "SELECT derivative(\"mc_buffer_drop\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": "1,1",
+          "title": "Multicast Packet Loss",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Multicast View",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 290,
       "panels": [
         {
           "aliasColors": {
@@ -193,6 +415,8 @@
               "groupBy": [],
               "measurement": "packet_stats",
               "policy": "default",
+              "query": "SELECT derivative(\"mc_total_egress\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
+              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -226,6 +450,8 @@
               "hide": false,
               "measurement": "packet_stats",
               "policy": "default",
+              "query": "SELECT derivative(\"mc_buffer_drop\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
+              "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
               "select": [
@@ -293,7 +519,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Dashboard Row",
+      "title": "Multicast Graphs",
       "titleSize": "h6"
     },
     {
@@ -789,7 +1015,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Dashboard Row",
+      "title": "System View",
       "titleSize": "h6"
     },
     {
@@ -909,7 +1135,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "960 Byte Buffer",
+          "title": "960 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -925,7 +1151,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": "",
               "logBase": 1,
               "max": null,
@@ -1055,7 +1281,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "2496 Byte Buffer",
+          "title": "2496 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1071,7 +1297,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1093,7 +1319,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Dashboard Row",
+      "title": "960-2496 Queues",
       "titleSize": "h6"
     },
     {
@@ -1213,7 +1439,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "4032 Byte Buffer",
+          "title": "4032 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1229,7 +1455,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1359,7 +1585,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "5568 Byte Buffer",
+          "title": "5568 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1375,7 +1601,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1397,7 +1623,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "4032-5568 Buffers",
+      "title": "4032-5568 Queues",
       "titleSize": "h6"
     },
     {
@@ -1517,7 +1743,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "7104 Byte Buffer",
+          "title": "7104 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1533,7 +1759,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1663,7 +1889,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "8640 Byte Buffer",
+          "title": "8640 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1679,7 +1905,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1701,7 +1927,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "7104-8604 Buffers",
+      "title": "7104-8604 Queues",
       "titleSize": "h6"
     },
     {
@@ -1821,7 +2047,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "10176 Byte Buffer",
+          "title": "10176 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1837,7 +2063,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -1967,7 +2193,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "11712 Byte Buffer",
+          "title": "11712 Byte Queue",
           "tooltip": {
             "shared": true,
             "sort": 1,
@@ -1983,7 +2209,7 @@
           },
           "yaxes": [
             {
-              "format": "µs",
+              "format": "Âµs",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -2005,7 +2231,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "10176-11712 Buffers",
+      "title": "10176-11712 Queues",
       "titleSize": "h6"
     }
   ],
@@ -2087,6 +2313,6 @@
   },
   "timezone": "browser",
   "title": "Buffer Monitoring",
-  "version": 11
+  "version": 1
 }
 }
