@@ -103,8 +103,8 @@
               "tags": [
                 {
                   "key": "interface",
-                  "operator": "=~",
-                  "value": "/^$interface$/"
+                  "operator": "=",
+                  "value": "swp32"
                 },
                 {
                   "condition": "AND",
@@ -2057,8 +2057,8 @@
     ]
   },
   "time": {
-    "from": "2017-03-28T02:17:51.020Z",
-    "to": "2017-03-28T03:07:51.020Z"
+    "from": "2017-03-30T08:19:26.096Z",
+    "to": "2017-03-30T08:26:28.885Z"
   },
   "timepicker": {
     "refresh_intervals": [
