@@ -42,7 +42,7 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 2,
+  "graphTooltip": 0,
   "hideControls": false,
   "id": null,
   "links": [],
@@ -50,229 +50,7 @@
   "rows": [
     {
       "collapse": false,
-      "height": 250,
-      "panels": [
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "influx",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 18,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "policy": "default",
-              "query": "SELECT derivative(\"mc_total_egress\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "<1",
-          "title": "Multicast Packets Transmitted",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": true,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "influx",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "id": 19,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "span": 6,
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "targets": [
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "policy": "default",
-              "query": "SELECT derivative(\"mc_buffer_drop\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": "1,1",
-          "title": "Multicast Packet Loss",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": null,
-      "repeatRowId": null,
-      "showTitle": false,
-      "title": "Multicast View",
-      "titleSize": "h6"
-    },
-    {
-      "collapse": false,
-      "height": 290,
+      "height": 288,
       "panels": [
         {
           "aliasColors": {
@@ -325,8 +103,8 @@
               "tags": [
                 {
                   "key": "interface",
-                  "operator": "=",
-                  "value": "swp32"
+                  "operator": "=~",
+                  "value": "/^$interface$/"
                 },
                 {
                   "condition": "AND",
@@ -415,8 +193,6 @@
               "groupBy": [],
               "measurement": "packet_stats",
               "policy": "default",
-              "query": "SELECT derivative(\"mc_total_egress\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
-              "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
               "select": [
@@ -450,8 +226,6 @@
               "hide": false,
               "measurement": "packet_stats",
               "policy": "default",
-              "query": "SELECT derivative(\"mc_buffer_drop\", 1s) FROM \"packet_stats\" WHERE \"interface\" =~ /^$interface$/ AND $timeFilter",
-              "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
               "select": [
@@ -519,7 +293,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "Multicast Graphs",
+      "title": "Dashboard Row",
       "titleSize": "h6"
     },
     {
@@ -1015,159 +789,13 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "System View",
+      "title": "Dashboard Row",
       "titleSize": "h6"
     },
     {
       "collapse": false,
       "height": 364,
       "panels": [
-        {
-          "aliasColors": {
-            "{3072} Bytes of Buffered Data": "#447EBC"
-          },
-          "bars": false,
-          "datasource": "influx",
-          "fill": 0,
-          "id": 2,
-          "interval": ">1s",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": true,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "span": 6,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "Miliseconds of Buffering",
-              "dsType": "influxdb",
-              "groupBy": [],
-              "hide": false,
-              "measurement": "histogram",
-              "policy": "default",
-              "query": "SELECT \"buffer_value\" FROM \"histogram\" WHERE \"interface\" =~ /^$interface$/ AND \"buffer\" = '1536' AND $timeFilter",
-              "rawQuery": false,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "buffer_value"
-                    ],
-                    "type": "field"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "interface",
-                  "operator": "=~",
-                  "value": "/^$interface$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "buffer",
-                  "operator": "=",
-                  "value": "960"
-                }
-              ]
-            },
-            {
-              "alias": "Average Buffer Utilization",
-              "dsType": "influxdb",
-              "groupBy": [],
-              "hide": false,
-              "measurement": "histogram",
-              "policy": "default",
-              "refId": "B",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "buffer_value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [
-                      "10"
-                    ],
-                    "type": "moving_average"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "interface",
-                  "operator": "=~",
-                  "value": "/^$interface$/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "buffer",
-                  "operator": "=",
-                  "value": "960"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "960 Byte Queue",
-          "tooltip": {
-            "shared": true,
-            "sort": 1,
-            "value_type": "individual"
-          },
-          "transparent": true,
-          "type": "graph",
-          "xaxis": {
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Âµs",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ]
-        },
         {
           "aliasColors": {
             "{3072} Bytes of Buffered Data": "#447EBC"
@@ -1313,17 +941,163 @@
               "show": false
             }
           ]
+        },
+        {
+          "aliasColors": {
+            "{3072} Bytes of Buffered Data": "#447EBC"
+          },
+          "bars": false,
+          "datasource": "influx",
+          "fill": 0,
+          "id": 2,
+          "interval": ">1s",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": true,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "Miliseconds of Buffering",
+              "dsType": "influxdb",
+              "groupBy": [],
+              "hide": false,
+              "measurement": "histogram",
+              "policy": "default",
+              "query": "SELECT \"buffer_value\" FROM \"histogram\" WHERE \"interface\" =~ /^$interface$/ AND \"buffer\" = '1536' AND $timeFilter",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "buffer_value"
+                    ],
+                    "type": "field"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "interface",
+                  "operator": "=~",
+                  "value": "/^$interface$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "buffer",
+                  "operator": "=",
+                  "value": "960"
+                }
+              ]
+            },
+            {
+              "alias": "Average Buffer Utilization",
+              "dsType": "influxdb",
+              "groupBy": [],
+              "hide": false,
+              "measurement": "histogram",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "buffer_value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [
+                      "10"
+                    ],
+                    "type": "moving_average"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "interface",
+                  "operator": "=~",
+                  "value": "/^$interface$/"
+                },
+                {
+                  "condition": "AND",
+                  "key": "buffer",
+                  "operator": "=",
+                  "value": "960"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "960 Byte Queue",
+          "tooltip": {
+            "shared": true,
+            "sort": 1,
+            "value_type": "individual"
+          },
+          "transparent": true,
+          "type": "graph",
+          "xaxis": {
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "Âµs",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ]
         }
       ],
       "repeat": null,
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "960-2496 Queues",
+      "title": "Dashboard Row",
       "titleSize": "h6"
     },
     {
-      "collapse": true,
+      "collapse": false,
       "height": 270,
       "panels": [
         {
@@ -1623,11 +1397,11 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "4032-5568 Queues",
+      "title": "4032-5568 Buffers",
       "titleSize": "h6"
     },
     {
-      "collapse": true,
+      "collapse": false,
       "height": 257,
       "panels": [
         {
@@ -1927,11 +1701,11 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "7104-8604 Queues",
+      "title": "7104-8604 Buffers",
       "titleSize": "h6"
     },
     {
-      "collapse": true,
+      "collapse": false,
       "height": 250,
       "panels": [
         {
@@ -2231,7 +2005,7 @@
       "repeatIteration": null,
       "repeatRowId": null,
       "showTitle": false,
-      "title": "10176-11712 Queues",
+      "title": "10176-11712 Buffers",
       "titleSize": "h6"
     }
   ],
@@ -2283,8 +2057,8 @@
     ]
   },
   "time": {
-    "from": "2017-03-30T08:19:26.096Z",
-    "to": "2017-03-30T08:26:28.885Z"
+    "from": "2017-03-30T06:34:05.763Z",
+    "to": "2017-03-30T07:30:30.173Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2314,5 +2088,4 @@
   "timezone": "browser",
   "title": "Buffer Monitoring",
   "version": 1
-}
-}
+}}
