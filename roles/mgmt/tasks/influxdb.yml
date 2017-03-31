@@ -15,23 +15,23 @@
     update_cache: yes
     state: present
 
-- name: Copy Influx Database Backup
-  copy:
-    src: influx_data
-    dest: /home/cumulus/
-    owner: cumulus
-    group: cumulus
+# - name: Copy Influx Database Backup
+#   copy:
+#     src: influx_data
+#     dest: /home/cumulus/
+#     owner: cumulus
+#     group: cumulus
 
-- name: Ensure Influxdb service is stopped
-  service:
-    name: influxdb
-    state: stopped
+# - name: Ensure Influxdb service is stopped
+#   service:
+#     name: influxdb
+#     state: stopped
 
-- name: Load Influx Meta data
-  command: influxd restore -metadir /var/lib/influxdb/meta/ /home/cumulus/influx_data/meta/
+# - name: Load Influx Meta data
+#   command: influxd restore -metadir /var/lib/influxdb/meta/ /home/cumulus/influx_data/meta/
 
-- name: Load Influx Database
-  command: influxd restore -database network -datadir /var/lib/influxdb/data/ /home/cumulus/influx_data/
+# - name: Load Influx Database
+#   command: influxd restore -database network -datadir /var/lib/influxdb/data/ /home/cumulus/influx_data/
 
 - name: Start influxdb service
   service:
@@ -39,10 +39,10 @@
     state: started
     enabled: yes
 
-- name: Correct influxdb permissions
-  file:
-    path: /var/lib/influxdb
-    owner: influxdb
-    group: influxdb
-    recurse: yes
+# - name: Correct influxdb permissions
+#   file:
+#     path: /var/lib/influxdb
+#     owner: influxdb
+#     group: influxdb
+#     recurse: yes
 
