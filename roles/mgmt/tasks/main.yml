@@ -1,4 +1,4 @@
 ---
 - include: influxdb.yml
 - include: grafana.yml
-- include: kapacitor.yml
+#- include: kapacitor.yml
