@@ -252,20 +252,24 @@ def histogram_influx_measurements(json_data, mutate=False):
 
     # Loop over every interface captures in this run
     for interface, queues in json_data["histogram_info"].iteritems():
+        buffer_depth = 0
 
         # look at all the queues under that interface and build the influx message
         for queue_number in queues:
             # The queues are a range
             # Let's simplify and just provide the low end of the range
-            if mutate:
+            if mutate:  # use this if the provided buffer numbers were off.
                 mutated_queue = mutate(queue_number)
             else:
                 mutated_queue = queue_number
 
             buffer_num = mutated_queue[0:mutated_queue.find(":")]
+            buffer_depth = buffer_depth + (float(buffer_num) * float(queues[queue_number]))
             output.append(measurement_name + "," + "interface=" + interface + ",buffer=" + str(buffer_num) + " " +
                           "buffer_value=" + str(queues[queue_number]) + " " + str(timestamp))
 
+        # Convert buffer_depth from bytes to bits, then divide by egress interface speed, in our case 100Gbps
+        output.append("delay,interface=" + interface + " delay=" + str((buffer_depth * 8) / 100000000000) + " " + str(timestamp))
     return output
 
 
