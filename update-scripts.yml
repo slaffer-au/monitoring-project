@@ -1,0 +1,18 @@
+- hosts: leafs spines
+  become: yes
+  tasks:
+    - name: Copy scripts for checks
+      copy: src=roles/monitoring_agent/files/telegraf_checks/{{ item.script }} dest=/etc/telegraf/checks/
+      with_items:
+        - { script: "bgp_neighbor_data.py" }
+        - { script: "hwenv_data.py" }
+        - { script: "interface_data.py" }
+        - { script: "lldp_data.py" }
+        - { script: "output_module.py" }
+        - { script: "sysenv_data.py" }
+        - { script: "logs_data.py" }
+      register: scripts
+    
+    - name: Restart telegraph on switches
+      service: name=telegraf state=restarted
+      when: scripts.changed
